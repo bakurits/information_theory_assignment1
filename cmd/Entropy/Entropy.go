@@ -1,6 +1,9 @@
 package main
 
 import (
+	"assignment1/filestatistics"
+	"fmt"
+	"io"
 	"log"
 	"os"
 )
@@ -19,5 +22,13 @@ func main() {
 			log.Fatal(err)
 		}
 	}()
+
+	singleEntropy := filestatistics.SingleSymbolEntropy(io.Reader(f), 1)
+	_, _ = f.Seek(0, 0)
+	joinEntropy := filestatistics.SingleSymbolEntropy(io.Reader(f), 2)
+
+	conditionalEntropy := joinEntropy - singleEntropy
+
+	fmt.Println(conditionalEntropy)
 
 }

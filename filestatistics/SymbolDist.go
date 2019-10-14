@@ -4,22 +4,11 @@ import (
 	"bufio"
 	"io"
 	"log"
-	"os"
 	"strings"
 )
 
-func GetSubstringDistribution(filename string, substringLength int) map[string]float64 {
-	f, err := os.Open(filename)
-	if err != nil {
-		log.Fatal("error in opening file")
-	}
-	defer func() {
-		err = f.Close()
-		if err != nil {
-			log.Fatal(err)
-		}
-	}()
-	r := bufio.NewReader(f)
+func GetSubstringDistribution(reader io.Reader, substringLength int) map[string]float64 {
+	r := bufio.NewReader(reader)
 	var st []rune
 	st = []rune(strings.Repeat(" ", substringLength-1))
 	var res = make(map[string]float64)
@@ -44,7 +33,7 @@ func GetSubstringDistribution(filename string, substringLength int) map[string]f
 			if _, ok := res[str]; !ok {
 				res[str] = 0
 			}
-			res[str] ++
+			res[str]++
 		}
 	}
 
